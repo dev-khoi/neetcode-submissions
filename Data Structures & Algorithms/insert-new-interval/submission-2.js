@@ -1,0 +1,30 @@
+class Solution {
+    /**
+     * @param {number[][]} intervals
+     * @param {number[]} newInterval
+     * @return {number[][]}
+     */
+    insert(intervals, newInterval) {
+        const res = []
+
+        for(let i = 0; i < intervals.length; i++){
+            if(newInterval[1] < intervals[i][0]){
+                res.push(newInterval)
+                res.push(...intervals.slice(i))
+                return res;
+            }
+            else if (newInterval[0] > intervals[i][1]){
+                res.push(intervals[i])
+            }
+            // case when new interval[0] is smaller than intervals and 1 > the next 1
+            
+            else{
+                newInterval = [Math.min(newInterval[0], intervals[i][0]), Math.max(newInterval[1], intervals[i][1])]
+
+            }
+
+        }
+        res.push(newInterval)
+        return res;
+    }
+}

@@ -1,0 +1,60 @@
+class TrieNode {
+    constructor(){
+        this.children= new Map()
+        this.endOfWord = false
+    }
+}
+
+class PrefixTree {
+    constructor() {
+        this.root = new TrieNode()
+    }
+
+    /**
+     * @param {string} word
+     * @return {void}
+     */
+    insert(word) {
+        let curr = this.root
+        
+        for(const w of word){
+            if(!curr.children.has(w)){
+                curr.children.set(w, new TrieNode())
+            }
+            curr = curr.children.get(w)
+        }
+        curr.endOfWord = true
+    }
+
+    /**
+     * @param {string} word
+     * @return {boolean}
+     */
+    search(word) {
+        let curr = this.root
+
+        for(const c of word){
+            if(!curr.children.get(c)){
+                return false
+            }
+            curr = curr.children.get(c)
+        }
+        return curr.endOfWord
+    }
+
+    /**
+     * @param {string} prefix
+     * @return {boolean}
+     */
+    startsWith(prefix) {
+        let curr = this.root
+
+        for(const c of prefix){
+            if(!curr.children.get(c)){
+                return false
+            }
+            curr = curr.children.get(c)
+        }
+        return true;
+    }
+}
